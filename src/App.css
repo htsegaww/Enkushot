@@ -25,7 +25,9 @@ body {
 .title {
   margin-top: 40px;
 }
-
+.title h2 {
+  margin-bottom: 10px;
+}
 .title h2,
 .title p {
   text-align: center;
