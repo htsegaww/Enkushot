@@ -12,6 +12,7 @@
 *:after,
 *:before {
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 body {
@@ -137,16 +138,6 @@ label > input {
 
 /* sign up css */
 
-.signup-container {
-  max-width: 400px;
-  margin: 0 auto;
-  margin-top: 200px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 .form-signup {
   display: flex;
   flex-direction: column;
@@ -170,12 +161,12 @@ label > input {
 /* navbar css */
 .navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
 .logout-btn {
-  padding: 10px 30px;
+  padding: 6px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -184,6 +175,7 @@ label > input {
   border-radius: 10px;
   color: var(--primary);
   background-color: #fff;
+
   cursor: pointer;
 }
 .logout-btn:hover {
@@ -215,8 +207,10 @@ label > input {
   }
   .navbar {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
+    padding: 10px;
+    margin-bottom: -70px;
   }
   .btn {
     display: flex;
@@ -227,6 +221,28 @@ label > input {
     padding: 10px 40px;
     border-radius: 10px;
     transition: all 0.5s ease-in-out;
+  }
+  .title {
+    text-align: center;
+  }
+  .title p {
+    width: 75%;
+    margin: 0 auto;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .title {
+    font-size: 20px;
+    text-align: center;
+  }
+  .img-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -327,6 +343,23 @@ label > input {
     padding: 1rem;
   }
 }
+@media screen and (max-width: 430px) {
+  .btn {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+  .title {
+    text-align: center;
+  }
+}
 
 /* For large devices */
 @media screen and (min-width: 1120px) {
@@ -345,7 +378,7 @@ label > input {
   text-transform: capitalize;
   text-decoration: none;
   color: #9e2a2b;
-  padding: 6px 40px;
+  padding: 1px 30px;
   border: 1px solid;
   border-radius: 10px;
   color: var(--primary);
@@ -354,6 +387,8 @@ label > input {
 }
 .nav-about:hover {
   color: black;
+  transition: all 1 ease-in-out;
+  transform: scale(1.1);
 }
 
 .about {
@@ -366,23 +401,25 @@ label > input {
 }
 
 .about > img {
-  width: 450px;
+  width: 100%;
   border-radius: 14px;
 }
 
 .about-h1 {
   text-align: center;
-  margin-top: 20px;
+  margin: 50px auto;
   text-transform: capitalize;
   color: #9e2a2b;
   padding: 6px 40px;
   color: var(--primary);
+  margin-bottom: -100px;
+  font-size: 50px;
 }
 .about-description .p-1 {
   margin-bottom: 40px;
 }
 .about-description p {
-  width: 500px;
+  /* width: 500px; */
 }
 
 .underline {
@@ -395,4 +432,20 @@ label > input {
   text-align: center;
   margin-top: 20px;
   color: #9e2a2b;
+}
+
+@media screen and (max-width: 430px) {
+  .about-h1 {
+    margin-top: 50px;
+  }
+  .about {
+    display: flex;
+    flex-direction: column;
+  }
+  .about img {
+    width: 400px;
+  }
+  .about-description {
+    width: 350px;
+  }
 }

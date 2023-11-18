@@ -1,9 +1,10 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import about from "../assets/about-image.jpg";
+
 const About = () => {
   return (
-    <>
+    <div>
       <Navbar />
       <h1 className="about-h1">about</h1>
       <span className="underline"></span>
@@ -23,7 +24,7 @@ const About = () => {
         </div>
       </div>
       <p className="footer">LET'S SHARE OUR PHOTOGRAPHY...📸</p>
-    </>
+    </div>
   );
 };
 
