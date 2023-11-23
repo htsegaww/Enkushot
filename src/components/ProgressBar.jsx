@@ -14,7 +14,7 @@ const ProgressBar = ({ file, setFile }) => {
   }, [url, setFile]);
   return (
     <motion.div
-      className="progress-bar"
+      className="h-2 mt-5 bg-emerald-600"
       initial={{ width: 0 }}
       animate={{ width: progress + "%" }}
     ></motion.div>

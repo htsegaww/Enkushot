@@ -1,20 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap");
 
 :root {
-  --primary: #9e2a2b;
+  /* --primary: #efb6b2; */
   --secondary: #4e4e4e;
   --error: #ff4a4a;
-  --container-color: hsl(0, 0%, 100%);
-  --small-font-size: 0.813rem;
-  --h2-font-size: 1.25rem;
-}
-*,
-*:after,
-*:before {
-  box-sizing: border-box;
-  overflow-x: hidden;
 }
 
+/* base styles & title */
 body {
   font-family: "Noto Serif";
   color: var(--secondary);
@@ -23,11 +15,11 @@ body {
   max-width: 960px;
   margin: 0 auto;
 }
-.title {
-  margin-top: 40px;
-}
-.title h2 {
-  margin-bottom: 10px;
+.title h1 {
+  color: var(--primary);
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  font-weight: normal;
 }
 .title h2,
 .title p {
@@ -35,49 +27,18 @@ body {
 }
 .title h2 {
   margin-top: 60px;
-  font-size: 2rem;
+  font-size: 2.6rem;
 }
 
+/* upload form styles */
 form {
   margin: 30px auto 10px;
   text-align: center;
 }
-label > input {
-  height: 0;
-  width: 0;
-  opacity: 0;
-}
 
-.label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 12%;
-  color: var(--primary);
-  cursor: pointer;
-}
-
-.btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  border: 1px solid;
-  padding: 10px 40px;
-  border-radius: 10px;
-  transition: all 0.5s ease-in-out;
-}
-.btn:hover {
-  color: black;
-}
 .output {
   height: 60px;
   font-size: 0.8rem;
-}
-
-.img {
-  width: 60px;
-  height: 60px;
 }
 .error {
   color: var(--error);
@@ -85,37 +46,37 @@ label > input {
 
 /* progress bar styles */
 .progress-bar {
-  height: 10px;
-  background: var(--primary);
+  height: 5px;
   margin-top: 20px;
 }
 
 /* image grid styles */
 .img-grid {
-  position: relative;
   margin: 20px auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 40px;
 }
-
 .img-wrap {
   overflow: hidden;
-  padding: 60.5% 0;
+  height: 0;
+  padding: 50% 0;
   /* padding controls height, will always be perfectly square regardless of width */
   position: relative;
-  /* opacity: 0.8; */
-  cursor: zoom-in;
+  border-radius: 10px;
+}
+
+.img-wrap:hover {
+  opacity: 1;
 }
 .img-wrap img {
-  width: 100%;
-  height: 100%;
-  /* max-width: 150%; */
+  min-width: 100%;
+  min-height: 100%;
+  max-width: 150%;
   position: absolute;
-  object-fit: cover;
   top: 0;
   left: 0;
-  border-radius: 10px;
+  cursor: zoom-in;
 }
 
 /* modal styles */
@@ -136,123 +97,12 @@ label > input {
   border: 3px solid white;
 }
 
-/* sign up css */
-
-.form-signup {
-  display: flex;
-  flex-direction: column;
-  /* gap: 20px; */
-}
-
-.label-form {
-  margin-bottom: 10px;
-  border: none;
-  margin-left: 0;
-}
-
-.input-form-signup {
-  padding: 20px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  outline: none;
-}
-
-/* navbar css */
-.navbar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.logout-btn {
-  padding: 6px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  border: 1px solid;
-  border-radius: 10px;
-  color: var(--primary);
-  background-color: #fff;
-
-  cursor: pointer;
-}
-.logout-btn:hover {
-  color: black;
-}
-@media screen and (max-width: 970px) {
-  .img-grid {
-    position: relative;
-    margin: 20px auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 40px;
-    padding: 10px;
-  }
-  .navbar {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-  }
-}
-@media screen and (max-width: 500px) {
-  .img-grid {
-    position: relative;
-    margin: 20px auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 40px;
-    padding: 20px;
-  }
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    margin-bottom: -70px;
-  }
-  .btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid;
-    padding: 10px 40px;
-    border-radius: 10px;
-    transition: all 0.5s ease-in-out;
-  }
-  .title {
-    text-align: center;
-  }
-  .title p {
-    width: 75%;
-    margin: 0 auto;
-  }
-}
-@media screen and (min-width: 1024px) {
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .title {
-    font-size: 20px;
-    text-align: center;
-  }
-  .img-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 /* card */
-.card-data {
+/* .card-data {
   width: 200px;
-  background-color: #780116;
+  background-color: #069668;
   padding: 1rem 2rem;
   box-shadow: 0 8px 24px hsla(0, 0%, 0%, 0.15);
-  border-radius: 1rem;
   position: absolute;
   bottom: -9rem;
   left: 0;
@@ -291,10 +141,10 @@ label > input {
 
 .img-wrap:not(:hover) .card-data {
   animation: remove-data 1s forwards;
-}
+} */
 
 /* Card animation */
-@keyframes show-data {
+/* @keyframes show-data {
   50% {
     transform: translateY(-10rem);
   }
@@ -319,9 +169,9 @@ label > input {
   100% {
     transform: translateY(0.5rem);
   }
-}
+} */
 
-@keyframes show-overflow {
+/* @keyframes show-overflow {
   0% {
     overflow: initial;
     pointer-events: none;
@@ -329,7 +179,7 @@ label > input {
   50% {
     overflow: hidden;
   }
-}
+} */
 
 /*=============== BREAKPOINTS ===============*/
 /* For small devices */
@@ -363,9 +213,6 @@ label > input {
 
 /* For large devices */
 @media screen and (min-width: 1120px) {
-  .img-wrap {
-    width: 348px;
-  }
   .card-data {
     width: 316px;
     padding-inline: 2.5rem;
@@ -418,9 +265,6 @@ label > input {
 .about-description .p-1 {
   margin-bottom: 40px;
 }
-.about-description p {
-  /* width: 500px; */
-}
 
 .underline {
   border-bottom: 1px solid #9e2a2b;
@@ -449,3 +293,142 @@ label > input {
     width: 350px;
   }
 }
+
+@media screen and (max-width: 900px) {
+  .img-grid {
+    grid-template-columns: 1fr 1fr;
+    padding: 30px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .img-grid {
+    grid-template-columns: 1fr;
+    padding: 40px;
+  }
+}
+/* @media screen and (min-width: 500px) {
+  .img-grid {
+    grid-template-columns: 1fr;
+    padding: 40px;
+  }
+} */
+
+/* LOGIN AND SIGN UP CSS 
+
+.login-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid red;
+  margin: 0 auto;
+  margin-top: 10%;
+  padding: 20px;
+  position: relative;
+}
+.login-container > img {
+  height: 700px;
+  width: 384px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+  width: 300px;
+  background-color: white;
+  position: absolute;
+  top: 150px;
+  left: 1000px;
+}
+
+.login-input {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  gap: 20px;
+}
+.login-input label {
+  display: flex;
+  justify-content: start;
+}
+.login-input input {
+  border-bottom: 1px solid rgb(184, 177, 177);
+  width: 200px;
+  outline: none;
+  margin-top: -10px;
+}
+.form-container {
+  height: 700px;
+  width: 384px;
+  margin-top: 20px;
+  background: #043b22;
+  margin: 20px;
+}
+
+.bottom-bg {
+  background: #52c66e;
+  clip-path: polygon(0 78%, 0 100%, 100% 100%, 100% 53%, 0 28%, 0 0);
+  height: 100%;
+  width: 100%;
+}
+
+.form > button {
+  background: #043b22;
+  color: white;
+  width: 200px;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.option > button {
+  color: #043b22;
+  background-color: white;
+  width: 200px;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #043b22;
+}
+
+.option {
+  padding: 30px;
+}
+.option p {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* @media screen and (max-width: 945) {
+  .form {
+    position: absolute;
+    top: 150px;
+    left: 330px;
+  }
+} */
+
+/* default iphone screens 
+@media only screen and (device-width: 430px) {
+  .form {
+    position: absolute;
+    top: 150px;
+    left: 65px;
+  }
+}
+
+/* default pixel screens 
+@media only screen and (device-width: 412px) {
+  .form {
+    position: absolute;
+    top: 150px;
+    left: 55px;
+  }
+}
+@media only screen and (min-width: 490px) {
+  .form {
+    position: absolute;
+    top: 150px;
+    left: 330px;
+  }
+}
+*/

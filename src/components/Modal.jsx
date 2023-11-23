@@ -15,6 +15,7 @@ const Modal = ({ setSelectedImage, selectedImage }) => {
       animate={{ opacity: 1 }}
     >
       <motion.img
+        className="group"
         src={selectedImage}
         alt="modal image"
         initial={{ y: "-100vh" }}

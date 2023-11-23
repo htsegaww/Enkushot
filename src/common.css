@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 :root {
   --background: #fff;
@@ -110,4 +110,124 @@ button {
     border-radius: 8px;
     background: var(--form-bg);
   }
+} 
+
+
+.login-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid red;
+  margin: 0 auto;
+  margin-top: 10%;
+  padding: 20px;
+  position: relative;
 }
+.login-container > img {
+  height: 700px;
+  width: 384px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+  width: 300px;
+  background-color: white;
+  position: absolute;
+  top: 150px;
+  left: 90px;
+}
+
+.login-input {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  gap: 20px;
+}
+.login-input label {
+  display: flex;
+  justify-content: start;
+}
+.login-input input {
+  border-bottom: 1px solid rgb(184, 177, 177);
+  width: 200px;
+  outline: none;
+  margin-top: -10px;
+}
+.form-container {
+  height: 700px;
+  width: 384px;
+  margin-top: 20px;
+  background: #043b22;
+  margin: 20px;
+}
+
+.bottom-bg {
+  background: #52c66e;
+  clip-path: polygon(0 78%, 0 100%, 100% 100%, 100% 53%, 0 28%, 0 0);
+  height: 100%;
+  width: 100%;
+}
+
+.form > button {
+  background: #043b22;
+  color: white;
+  width: 200px;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.option > button {
+  color: #043b22;
+  background-color: white;
+  width: 200px;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #043b22;
+}
+
+.option {
+  padding: 30px;
+}
+.option p {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* @media screen and (max-width: 945) {
+  .form {
+    position: absolute;
+    top: 150px;
+    left: 330px;
+  }
+} */
+
+/* default iphone screens */
+/* @media only screen and (device-width: 430px) {
+  .form {
+    position: absolute;
+    top: 150px;
+    left: 65px;
+  }
+} */
+
+/* default pixel screens */
+
+/* @media only screen and (device-width: 412px) {
+  .form {
+    position: absolute;
+    top: 150px;
+    left: 55px;
+  }
+} */
+/* @media only screen and (min-width: 490px) {
+  .form {
+    position: absolute;
+    top: 150px;
+    left: 160px;
+    width: 50%;
+  }
+} */

@@ -5,7 +5,9 @@ import { AuthProvider } from "./context/auth";
 import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import Login from "./pages/Login";
-import About from "./pages/About";
+// import About from "./pages/About";
+import "./App.css";
+import User from "./pages/User";
 
 const App = () => {
   return (
@@ -13,21 +15,22 @@ const App = () => {
       <div className="App">
         <Routes>
           <Route
-            path="/"
+            path="/user"
             element={
               <PrivateRoute>
-                <Home />
+                <User />
               </PrivateRoute>
             }
           />
           <Route
-            path="/about"
+            path="/"
             element={
-              <PrivateRoute>
-                <About />
-              </PrivateRoute>
+              <PublicRoute>
+                <Home />
+              </PublicRoute>
             }
           />
+
           <Route
             path="/signup"
             element={

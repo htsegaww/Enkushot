@@ -4,9 +4,8 @@ import UploadForm from "../components/UploadForm";
 import ImageGrid from "../components/ImageGrid";
 import Navbar from "../components/Navbar";
 import Modal from "../components/Modal";
-import "../App.css";
 
-const Home = () => {
+const User = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   return (
@@ -25,4 +24,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default User;
