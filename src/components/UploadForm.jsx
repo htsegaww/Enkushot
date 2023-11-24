@@ -22,7 +22,7 @@ const UploadForm = () => {
     }
   };
   return (
-    <form className="max-w-96 hidden lg:block md:block ">
+    <form className="max-w-96 lg:block md:block ">
       {user ? (
         <label className="flex flex-col items-center justify-center cursor-pointer">
           <input type="file" onChange={changeHandler} className="hidden" />

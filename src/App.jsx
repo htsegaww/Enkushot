@@ -5,7 +5,7 @@ import { AuthProvider } from "./context/auth";
 import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import Login from "./pages/Login";
-// import About from "./pages/About";
+
 import "./App.css";
 import User from "./pages/User";
 
