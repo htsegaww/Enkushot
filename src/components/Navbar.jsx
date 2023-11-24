@@ -6,7 +6,6 @@ import { useAuth } from "../hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 import { MdPersonAddAlt1, MdPersonRemoveAlt1 } from "react-icons/md";
 import { CgMenuMotion } from "react-icons/cg";
-// import { FaUpload } from "react-icons/fa";
 
 const Navbar = () => {
   const { user } = useAuth();
