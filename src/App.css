@@ -60,10 +60,11 @@ form {
 .img-wrap {
   overflow: hidden;
   height: 0;
-  padding: 50% 0;
+  padding: 60% 0;
   /* padding controls height, will always be perfectly square regardless of width */
   position: relative;
   border-radius: 10px;
+  object-fit: cover;
 }
 
 .img-wrap:hover {

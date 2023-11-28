@@ -5,7 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 
 import { Link, useNavigate } from "react-router-dom";
 import { MdPersonAddAlt1, MdPersonRemoveAlt1 } from "react-icons/md";
-import { CgMenuMotion } from "react-icons/cg";
+// import { CgMenuMotion } from "react-icons/cg";
 
 const Navbar = () => {
   const { user } = useAuth();
@@ -23,7 +23,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className=" lg:flex lg:flex-row md:flex-row flex justify-evenly  items-center w-full rounded ">
+      <div className=" lg:flex lg:flex-row md:flex-row flex justify-between lg:justify-evenly  items-center w-full rounded fixed z-10 top-0 left-0 bg-white p-5">
         <Link to="/">
           <h1 className="text-2xl text-[#069668] ">
             Heno

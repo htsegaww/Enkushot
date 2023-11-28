@@ -12,7 +12,7 @@ import User from "./pages/User";
 const App = () => {
   return (
     <AuthProvider>
-      <div className="App">
+      <div className="App bg-[#f9f9f9]">
         <Routes>
           <Route
             path="/user"
