@@ -23,7 +23,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className=" lg:flex lg:flex-row md:flex-row flex justify-between lg:justify-evenly  items-center w-full rounded">
+      <div className=" lg:flex lg:flex-row md:flex-row flex justify-evenly lg:justify-evenly  items-center w-full rounded">
         <Link to="/">
           <h1 className="text-2xl text-[#069668] ">
             Heno
