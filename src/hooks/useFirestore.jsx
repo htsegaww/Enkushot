@@ -21,7 +21,7 @@ const useFirestore = (images) => {
         const createdAt = doc.data().createdAt.toDate();
         const userEmail = doc.data().userEmail;
 
-        images.push({ url, createdAt, userEmail });
+        images.push({ url, createdAt, userEmail, ref: doc.ref, id: doc.id });
       });
       setDocs(images);
     });
