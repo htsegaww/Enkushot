@@ -12,6 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
   const login = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
@@ -23,9 +24,21 @@ const Login = () => {
       .catch((error) => {
         console.log(error);
         setError(error.message);
-
         toast.error("Wrong Email or password. Please try again!");
       });
+  };
+
+  const handleResetPassword = async () => {
+    if (!email) {
+      toast.error("Please enter your email to reset password.");
+      return;
+    }
+    try {
+      await import("firebase/auth").then(({ sendPasswordResetEmail }) => sendPasswordResetEmail(auth, email));
+      toast.success("Password reset email sent!");
+    } catch (err) {
+      toast.error("Failed to send reset email. Please check your email address.");
+    }
   };
 
   return (
@@ -60,7 +73,6 @@ const Login = () => {
           <div className="flex flex-start flex-col justify-center items-center p-10 w-72 gap-5">
             <div className="flex flex-start justify-center items-center gap-2 rounded-2xl w-full border-b-2 h-10 px-3">
               <MdOutlineMailLock size={20} />
-
               <input
                 className="flex flex-start outline-none cursor-text border-gray-300 w-full text-gray-950"
                 type="email"
@@ -69,7 +81,6 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-
             <div className="flex flex-start justify-center items-center gap-2 rounded-2xl w-full border-b-2 h-10 px-3 ">
               <RiLockPasswordFill size={20} />
               <input
@@ -80,6 +91,13 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            <button
+              type="button"
+              onClick={handleResetPassword}
+              className="text-emerald-600 bg-white rounded-full w-full px-5 py-2 border border-emerald-600 mt-2"
+            >
+              Forgot Password?
+            </button>
           </div>
 
           <button
