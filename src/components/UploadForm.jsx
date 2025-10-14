@@ -32,6 +32,7 @@ const UploadForm = () => {
               <FaUpload />
             </span>
           </div>
+          {/* no extra buttons */}
         </label>
       ) : (
         <p>

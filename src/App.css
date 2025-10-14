@@ -12,8 +12,11 @@ body {
   color: var(--secondary);
 }
 .App {
-  max-width: 960px;
+  /* increased container so 4 columns can be wider + side padding to keep gutters */
+  max-width: 1400px;
   margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 .title h1 {
   color: var(--primary);
@@ -52,32 +55,62 @@ form {
 
 /* image grid styles */
 .img-grid {
-  margin: 20px auto;
+  margin: 28px auto;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 40px;
+  grid-template-columns: repeat(4, 1fr);
+  /* slightly smaller gap so tiles take more space */
+  grid-gap: 12px;
+  /* ensure grid never touches edges on very small screens */
+  padding-left: 8px;
+  padding-right: 8px;
+  box-sizing: border-box;
 }
 .img-wrap {
   overflow: hidden;
   height: 0;
-  padding: 60% 0;
-  /* padding controls height, will always be perfectly square regardless of width */
+  /* Increase the aspect ratio to make images both wider and taller */
+  padding: 72% 0;
   position: relative;
   border-radius: 10px;
-  object-fit: cover;
+  background: #f3f3f3;
+  /* smooth lift + shadow on hover */
+  transition: transform 280ms cubic-bezier(.2,.8,.2,1), box-shadow 280ms cubic-bezier(.2,.8,.2,1);
 }
 
-.img-wrap:hover {
-  opacity: 1;
-}
 .img-wrap img {
-  min-width: 100%;
-  min-height: 100%;
-  max-width: 150%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;
+  transition: transform 300ms cubic-bezier(.2,.8,.2,1), opacity 300ms ease;
   cursor: zoom-in;
+}
+
+/* subtle overlay using pseudo-element */
+.img-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.18) 100%);
+  opacity: 0;
+  transition: opacity 260ms ease;
+  pointer-events: none;
+}
+
+.img-wrap:hover img {
+  transform: scale(1.03);
+}
+
+.img-wrap:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 40px rgba(2,6,23,0.18);
+}
+
+.img-wrap:hover::after {
+  opacity: 1;
 }
 
 /* modal styles */
@@ -87,15 +120,143 @@ form {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.45);
+  /* blur the content behind the overlay (modern browsers) */
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: backdrop-filter 200ms ease, background 200ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px; /* create space from edges */
 }
 .backdrop img {
   display: block;
-  max-width: 60%;
-  max-height: 80%;
-  margin: 60px auto;
-  box-shadow: 3px 5px 7px rgba(0, 0, 0, 0.5);
-  border: 3px solid white;
+  /* Ensure consistent side spacing: min width 600px, use 80% as preferred, cap at 1100px */
+  max-width: clamp(600px, 80%, 1100px);
+  max-height: 85vh;
+  margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+  border-radius: 6px;
+  z-index: 50;
+}
+
+/* Modal arrow buttons */
+.modal-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.85);
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.3);
+  z-index: 60;
+}
+.modal-arrow.left {
+  left: 48px; /* move arrows inward to create space */
+}
+.modal-arrow.right {
+  right: 48px; /* move arrows inward to create space */
+}
+.modal-arrow:hover {
+  transform: translateY(-50%) scale(1.04);
+}
+.modal-arrow.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: translateY(-50%) scale(1);
+}
+
+/* Heart icon button styles */
+.img-heart {
+  background: transparent; /* keep no background as requested */
+  border: none;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* hidden by default; shown on hover via group-hover */
+  opacity: 0;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+.img-heart svg {
+  transition: color 180ms ease, transform 180ms ease;
+  /* use currentColor so outline icon inherits container color (transparent background) */
+  color: currentColor;
+  filter: none;
+}
+.img-heart:active svg {
+  transform: scale(0.92);
+}
+/* When hovering the image or the heart, make it fully visible */
+.img-wrap:hover .img-heart,
+.img-heart:hover {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+/* small persistent favorite badge shown when favorited (non-intrusive) */
+/* Sign-in modal and blurred backdrop */
+.signin-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 120;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.signin-modal {
+  background: #fff;
+  padding: 20px 22px;
+  border-radius: 8px;
+  box-shadow: 0 12px 40px rgba(2,6,23,0.35);
+  max-width: 420px;
+  width: 92%;
+}
+.btn {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn-primary {
+  background: #111827;
+  color: #fff;
+}
+.btn-secondary {
+  background: #e5e7eb;
+  color: #111827;
+}
+.img-heart.favorited {
+  /* ensure the large heart is visible and red even when not hovered */
+  opacity: 1;
+  transform: scale(1.02);
+}
+/* When favorited, keep the heart visible and colored */
+.img-heart.favorited svg {
+  color: #e11d48 !important;
+}
+
+.debug-fav {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-size: 12px;
+  z-index: 60;
 }
 
 /* card */
