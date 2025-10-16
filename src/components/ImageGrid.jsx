@@ -66,12 +66,12 @@ const ImageGrid = ({ docs = [], images, setSelectedImage, setSelectedIndex, isFa
                     else next.add(doc.url);
                     return next;
                   });
+                  console.log("[ImageGrid] heart clicked for", doc.url);
                   toggleFavorite && toggleFavorite(doc.url);
                 }}
                 className={`img-heart absolute bottom-2 right-2 ${favorited ? "favorited" : ""}`}
                 aria-pressed={favorited}
                 aria-label="Favorite"
-                disabled={isFavoritesView}
               >
                 {favorited ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
               </button>
