@@ -11,6 +11,9 @@ body {
   font-family: "Noto Serif";
   color: var(--secondary);
 }
+.top-navbar-space {
+  height: 64px; /* matches the navbar height */
+}
 .App {
   /* increased container so 4 columns can be wider + side padding to keep gutters */
   max-width: 1400px;

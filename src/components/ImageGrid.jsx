@@ -7,19 +7,21 @@ import SignInModal from "./SignInModal";
 import { useState } from "react";
 const DEBUG = typeof window !== "undefined" && new URLSearchParams(window.location.search).get("debug") === "1";
 
-const ImageGrid = ({ docs = [], setSelectedImage, setSelectedIndex, isFavorited, toggleFavorite }) => {
+const ImageGrid = ({ docs = [], images, setSelectedImage, setSelectedIndex, isFavorited, toggleFavorite, isFavoritesView }) => {
   const { user } = useAuth();
 
   const [showSignIn, setShowSignIn] = useState(false);
   // local optimistic favorites to ensure immediate UI feedback
   const [localFavs, setLocalFavs] = useState(new Set());
 
+  // Support both 'docs' (main gallery) and 'images' (favorites modal)
+  const items = images || docs;
   return (
     <div className="img-grid relative">
-      {docs.map((doc, idx) => {
-  const favoritedRemote = isFavorited ? isFavorited(doc.url) : false;
-  // combine local optimistic state with remote state
-  const favorited = localFavs.has(doc.url) || favoritedRemote;
+      {items.map((doc, idx) => {
+        // For favorites modal, fallback to always favorited
+        const favoritedRemote = isFavorited ? isFavorited(doc.url) : isFavoritesView ? true : false;
+        const favorited = localFavs.has(doc.url) || favoritedRemote;
 
         return (
           <motion.div
@@ -27,8 +29,8 @@ const ImageGrid = ({ docs = [], setSelectedImage, setSelectedIndex, isFavorited,
             layout
             className="img-wrap group"
             onClick={() => {
-              setSelectedImage(doc.url);
-              setSelectedIndex(idx);
+              setSelectedImage && setSelectedImage(doc.url);
+              setSelectedIndex && setSelectedIndex(idx);
             }}
           >
             <motion.img src={doc.url} alt="images" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} />
@@ -58,26 +60,23 @@ const ImageGrid = ({ docs = [], setSelectedImage, setSelectedIndex, isFavorited,
                     setShowSignIn(true);
                     return;
                   }
-                  // optimistic toggle locally for immediate UI
                   setLocalFavs((prev) => {
                     const next = new Set(prev);
                     if (next.has(doc.url)) next.delete(doc.url);
                     else next.add(doc.url);
-                    console.log('[ImageGrid] local toggle favs ->', Array.from(next));
                     return next;
                   });
-                  console.log('[ImageGrid] click favorite (remote)', doc.url, 'currentlyFavorited=', favoritedRemote);
                   toggleFavorite && toggleFavorite(doc.url);
                 }}
                 className={`img-heart absolute bottom-2 right-2 ${favorited ? "favorited" : ""}`}
                 aria-pressed={favorited}
                 aria-label="Favorite"
+                disabled={isFavoritesView}
               >
                 {favorited ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
               </button>
             </motion.div>
 
-            {/* when favorited, the large heart (inside the hover overlay) will be visible even off-hover via the .favorited class */}
             {DEBUG && (
               <div className="debug-fav" aria-hidden>
                 fav: {String(favorited)}

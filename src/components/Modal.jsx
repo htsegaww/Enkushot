@@ -74,6 +74,30 @@ const Modal = ({
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
       />
 
+      {/* bottom overlay pill with uploader info */}
+      {selectedIndex !== null && docs[selectedIndex] && (
+        (() => {
+          const doc = docs[selectedIndex];
+          const firstName = doc.firstName || (doc.userEmail ? doc.userEmail.split('@')[0] : '');
+          const email = doc.userEmail || '';
+          const createdAt = doc.createdAt ? (doc.createdAt.seconds ? new Date(doc.createdAt.seconds * 1000) : new Date(doc.createdAt)) : null;
+          const dateStr = createdAt ? createdAt.toLocaleDateString() : null;
+          const initials = firstName ? firstName.charAt(0).toUpperCase() : (email ? email.charAt(0).toUpperCase() : '?');
+
+          return (
+            <div style={{ position: 'absolute', bottom: 22, left: '50%', transform: 'translateX(-50%)', zIndex: 80 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'rgba(0,0,0,0.55)', color: '#fff', padding: '8px 12px', borderRadius: 999, boxShadow: '0 6px 20px rgba(0,0,0,0.4)' }}>
+                <div style={{ width: 36, height: 36, borderRadius: 999, background: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>{initials}</div>
+                <div style={{ fontSize: 14, textAlign: 'left' }}>
+                  <a href={email ? `/user?email=${encodeURIComponent(email)}` : '#'} style={{ color: '#fff', fontWeight: 600, textDecoration: 'underline' }} onClick={(e) => { if (!email) e.preventDefault(); }}>{firstName}</a>
+                  {dateStr && <div style={{ fontSize: 12, opacity: 0.85 }}>{dateStr}</div>}
+                </div>
+              </div>
+            </div>
+          );
+        })()
+      )}
+
       <button
         aria-label="Next"
         onClick={(e) => {

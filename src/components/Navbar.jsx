@@ -1,59 +1,107 @@
-// import icon from "../assets/icon/icon.png";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { useAuth } from "../hooks/useAuth";
+import { useRef, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { MdPersonAddAlt1, MdPersonRemoveAlt1 } from "react-icons/md";
-// import { CgMenuMotion } from "react-icons/cg";
+
+import { FaUpload, FaHeart } from "react-icons/fa";
+import ProgressBar from "./ProgressBar";
+import UploadModal from "./UploadModal";
+import FavoritesModal from "./FavoritesModal";
 
 const Navbar = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  const fileInputRef = useRef(null);
+  const [file, setFile] = useState(null);
+  const [error, setError] = useState(null);
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [showFavoritesModal, setShowFavoritesModal] = useState(false);
+  const types = ["image/jpeg", "image/png", "image/jpg", "image/avif"];
+
+  const triggerFileSelect = () => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+    setError(null);
+    setShowUploadModal(true);
+  };
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      toast.success("logged out successfully!");
       navigate("/");
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
     }
   };
 
   return (
     <>
-      <div className=" lg:flex lg:flex-row md:flex-row flex justify-evenly lg:justify-evenly  items-center w-full rounded">
-        <Link to="/">
-          <h1 className="text-2xl text-[#069668] ">
-            Heno
-            <span className="">Gram</span>
-          </h1>
-        </Link>
-
-        {user ? (
-          <button
-            className="group text-black flex justify-center items-center gap-3"
-            onClick={handleLogout}
-          >
-            <MdPersonRemoveAlt1 size={20} />
-            <span className="font-bold text-black capitalize">
-              {user.email.split("@")[0]}
-              <span className="text-sm ml-4 opacity-0 group-hover:opacity-100  transition-all duration-150 ease-in-out text-[#069668]">
-                Logout
-              </span>
-            </span>
-          </button>
-        ) : (
-          <Link to="/login">
-            <button className="text-black flex justify-center items-center gap-3">
-              <MdPersonAddAlt1 size={20} />
-
-              <span className="font-bold text-black capitalize ">Login</span>
-            </button>
+      <header className="w-full bg-white shadow-sm fixed top-0 left-0 right-0 z-50" style={{ height: '64px' }}>
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between" style={{ height: '64px' }}>
+          <Link to="/" className="flex items-center gap-2">
+            <h1 className="text-2xl text-[#069668] font-semibold">Heno<span className="text-gray-800">Gram</span></h1>
           </Link>
-        )}
-      </div>
+
+          <nav>
+            <ul className="flex items-center gap-4">
+              <li>
+                <Link to="/" className="text-gray-700 hover:text-emerald-600">Home</Link>
+              </li>
+              <li>
+                <Link to="/" className="text-gray-700 hover:text-emerald-600">Gallery</Link>
+              </li>
+              <li>
+                <button onClick={triggerFileSelect} className="flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded">
+                  <FaUpload />
+                  <span className="hidden sm:inline">Upload</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => setShowFavoritesModal(true)}
+                  className="flex items-center gap-2 bg-pink-100 text-pink-600 px-3 py-1 rounded hover:bg-pink-200"
+                  aria-label="View Favorites"
+                >
+                  <FaHeart />
+                  <span className="hidden sm:inline">Favorites</span>
+                </button>
+              </li>
+              <li>
+                {user ? (
+                  <button onClick={handleLogout} className="text-gray-700 hover:text-red-600 flex items-center gap-2">
+                    <MdPersonRemoveAlt1 />
+                    <span className="hidden sm:inline">Logout</span>
+                  </button>
+                ) : (
+                  <Link to="/login" className="flex items-center gap-2 text-gray-700 hover:text-emerald-600">
+                    <MdPersonAddAlt1 />
+                    <span className="hidden sm:inline">Login / Sign Up</span>
+                  </Link>
+                )}
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      {/* spacer to prevent content being hidden under fixed navbar */}
+      <div className="top-navbar-space" aria-hidden="true" />
+      {/* show progress bar when uploading from navbar (kept for compatibility) */}
+      {file && (
+        <div className="fixed right-4 top-16 z-60 w-72 bg-white rounded shadow px-3 py-2">
+          <div className="text-sm mb-1">Uploading: {file.name}</div>
+          <ProgressBar file={file} setFile={setFile} metadata={{}} />
+          {error && <div className="text-xs text-red-600 mt-1">{error}</div>}
+        </div>
+      )}
+
+  {showUploadModal && <UploadModal onClose={() => setShowUploadModal(false)} />}
+  {showFavoritesModal && <FavoritesModal onClose={() => setShowFavoritesModal(false)} />}
     </>
   );
 };

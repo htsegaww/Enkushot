@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
 import { db, projectStorage } from "../firebase/firebase";
+
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { useAuth } from "./useAuth";
 
-const useStorage = (file) => {
+const useStorage = (file, metadata = {}) => {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
   const [url, setUrl] = useState(null);
   const { user } = useAuth();
 
   useEffect(() => {
+    if (!file) return;
+    //const storageRef = ref(projectStorage, file.name);
     const storageRef = ref(projectStorage, file.name);
+
     const collectionRef = doc(collection(db, "images"));
 
     const uploadTask = uploadBytesResumable(storageRef, file);
@@ -26,14 +30,15 @@ const useStorage = (file) => {
         setError(error);
       },
       async () => {
-        await getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          setDoc(collectionRef, {
-            url,
-            createdAt: new Date(),
-            userEmail: user?.email,
-          });
-          setUrl(url);
-        });
+            await getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+              setDoc(collectionRef, {
+                url,
+                createdAt: new Date(),
+                userEmail: user?.email,
+                firstName: metadata.firstName || (user?.displayName ? user.displayName.split(" ")[0] : ""),
+              });
+              setUrl(url);
+            });
       }
     );
   }, [file]);
