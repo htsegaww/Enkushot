@@ -8,7 +8,7 @@ const UploadForm = () => {
   return (
     <div className="max-w-96 lg:block md:block text-center mb-6">
       {user ? (
-        <p className="text-gray-700">Use the <strong>Upload</strong> button in the navbar to add pictures.</p>
+        <p className="text-gray-700">Ready to share your moments? Click the <strong>Upload</strong> button above ✨</p>
       ) : (
         <p>
           <Link to="/login" className="text-[#069668] font-bold">Login</Link>{" "}
