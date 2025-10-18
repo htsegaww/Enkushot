@@ -37,7 +37,7 @@ const Signup = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       console.log("Google sign-up successful:", result.user);
-      navigate("/user");
+      navigate("/");
       toast.success(`Welcome ${result.user.displayName}! Account created successfully.`);
     } catch (error) {
       console.error("Google sign-up error:", error);

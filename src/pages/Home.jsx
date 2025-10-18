@@ -6,11 +6,13 @@ import "../App.css";
 import useFirestore from "../hooks/useFirestore";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useAuth } from "../hooks/useAuth";
 
 const Home = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const { docs } = useFirestore("images");
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   // Get first 6 images for preview
@@ -44,12 +46,22 @@ const Home = () => {
             >
               View All Gallery
             </button>
-            <button
-              onClick={() => navigate("/signup")}
-              className="bg-white text-emerald-600 px-8 py-3 rounded-full font-semibold border-2 border-emerald-600 hover:bg-emerald-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-            >
-              Get Started
-            </button>
+            {!user && (
+              <button
+                onClick={() => navigate("/signup")}
+                className="bg-white text-emerald-600 px-8 py-3 rounded-full font-semibold border-2 border-emerald-600 hover:bg-emerald-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+              >
+                Get Started
+              </button>
+            )}
+            {user && (
+              <button
+                onClick={() => navigate("/user")}
+                className="bg-white text-emerald-600 px-8 py-3 rounded-full font-semibold border-2 border-emerald-600 hover:bg-emerald-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+              >
+                My Photos
+              </button>
+            )}
           </div>
         </motion.div>
 
@@ -137,14 +149,26 @@ const Home = () => {
               No photos yet
             </h3>
             <p className="text-gray-500 mb-6">
-              Start capturing your moments by signing up and uploading your first photo
+              {user 
+                ? "Be the first to upload and share your moments!" 
+                : "Start capturing your moments by signing up and uploading your first photo"
+              }
             </p>
-            <button
-              onClick={() => navigate("/signup")}
-              className="bg-emerald-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-            >
-              Get Started
-            </button>
+            {user ? (
+              <button
+                onClick={() => navigate("/user")}
+                className="bg-emerald-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+              >
+                Upload Your First Photo
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate("/signup")}
+                className="bg-emerald-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+              >
+                Get Started
+              </button>
+            )}
           </motion.div>
         )}
       </div>

@@ -23,22 +23,8 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/"
-            element={
-              <PublicRoute>
-                <Home />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="/gallery"
-            element={
-              <PublicRoute>
-                <Gallery />
-              </PublicRoute>
-            }
-          />
+          <Route path="/" element={<Home />} />
+          <Route path="/gallery" element={<Gallery />} />
 
           <Route
             path="/signup"

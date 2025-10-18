@@ -19,7 +19,7 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
-        navigate("/user");
+        navigate("/");
         toast.success("Logged in successfully!");
       })
       .catch((error) => {
@@ -34,11 +34,11 @@ const Login = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       console.log("Google sign-in successful:", result.user);
-      navigate("/user");
+      navigate("/");
       toast.success(`Welcome ${result.user.displayName}!`);
     } catch (error) {
       console.error("Google sign-in error:", error);
-      toast.error("Failed to sign in with Google. Please try again.");
+      toast.error("Failed to sign in with Google. Please try again!");
     }
   };
 
