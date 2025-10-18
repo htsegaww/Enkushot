@@ -7,7 +7,7 @@ const FavoritesModal = ({ onClose }) => {
   const { favorites, isFavorited, toggleFavorite } = useFavorites();
   const { user } = useAuth();
 
-  // favorites ready for display
+  console.log("[FavoritesModal] Rendering with", favorites.length, "favorites:", favorites);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">

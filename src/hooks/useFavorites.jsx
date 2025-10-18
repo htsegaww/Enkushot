@@ -19,9 +19,12 @@ const useFavorites = () => {
 
   useEffect(() => {
     if (!user) {
+      console.log("[useFavorites] No user, clearing favorites");
       setFavorites([]);
       return;
     }
+
+    console.log("[useFavorites] Subscribing to favorites for user:", user.email);
 
     const colRef = collection(db, "favorites");
     const q = query(colRef, where("userEmail", "==", user.email));
@@ -30,8 +33,9 @@ const useFavorites = () => {
       snapshot.forEach((doc) => {
         favs.push({ ...doc.data(), id: doc.id, ref: doc.ref });
       });
+      console.log("[useFavorites] Snapshot received. Count:", snapshot.size, "Favorites:", favs);
       const favUrls = favs.map((f) => f.url);
-      console.log("[useFavorites] onSnapshot ->", favUrls);
+      console.log("[useFavorites] URLs ->", favUrls);
       setFavorites(favs);
 
       // clear pending adds that the server now confirms
@@ -51,7 +55,11 @@ const useFavorites = () => {
   }, [user]);
 
   const toggleFavorite = async (url) => {
-    if (!user) throw new Error("Not authenticated");
+    console.log("[useFavorites] toggleFavorite called with URL:", url);
+    if (!user) {
+      console.error("[useFavorites] No user - throwing error");
+      throw new Error("Not authenticated");
+    }
     const existing = favorites.find((f) => f.url === url);
     console.log("[useFavorites] toggleFavorite", url, existing ? "remove" : "add");
     if (existing) {
@@ -80,13 +88,14 @@ const useFavorites = () => {
         return next;
       });
       try {
-        await addDoc(collection(db, "favorites"), {
+        const docRef = await addDoc(collection(db, "favorites"), {
           url,
           userEmail: user.email,
           createdAt: serverTimestamp(),
         });
+        console.log("[useFavorites] addDoc success! ID:", docRef.id);
       } catch (e) {
-        console.error(e);
+        console.error("[useFavorites] addDoc failed:", e);
         // remove optimistic entry on error
         setFavorites((prev) => prev.filter((f) => f.id !== optimistic.id));
         setPendingAdds((prev) => {

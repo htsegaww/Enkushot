@@ -67,7 +67,15 @@ const ImageGrid = ({ docs = [], images, setSelectedImage, setSelectedIndex, isFa
                     return next;
                   });
                   console.log("[ImageGrid] heart clicked for", doc.url);
-                  toggleFavorite && toggleFavorite(doc.url);
+                  if (toggleFavorite) {
+                    try {
+                      toggleFavorite(doc.url);
+                    } catch (error) {
+                      console.error("[ImageGrid] toggleFavorite error:", error);
+                    }
+                  } else {
+                    console.warn("[ImageGrid] toggleFavorite is not defined!");
+                  }
                 }}
                 className={`img-heart absolute bottom-2 right-2 ${favorited ? "favorited" : ""}`}
                 aria-pressed={favorited}
