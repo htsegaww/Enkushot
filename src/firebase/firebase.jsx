@@ -14,8 +14,19 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_APP_ID,
 };
 
+// Debug logging for production
+console.log("[Firebase] Config check:", {
+  hasApiKey: !!firebaseConfig.apiKey,
+  hasAuthDomain: !!firebaseConfig.authDomain,
+  hasProjectId: !!firebaseConfig.projectId,
+  projectId: firebaseConfig.projectId,
+  hasStorageBucket: !!firebaseConfig.storageBucket,
+  hasMessagingSenderId: !!firebaseConfig.messagingSenderId,
+  hasAppId: !!firebaseConfig.appId,
+});
+
 if (!import.meta.env.VITE_PROJECT_ID) {
-  console.error("⚠️ VITE_PROJECT_ID is missing! Check your .env file");
+  console.error("⚠️ VITE_PROJECT_ID is missing! Check your .env file or Vercel environment variables");
 }
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

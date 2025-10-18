@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineMailLock } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { FcGoogle } from "react-icons/fc";
 
 // import "../common.css";
 import { toast } from "react-toastify";
@@ -26,6 +27,19 @@ const Login = () => {
         setError(error.message);
         toast.error("Wrong Email or password. Please try again!");
       });
+  };
+
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      console.log("Google sign-in successful:", result.user);
+      navigate("/user");
+      toast.success(`Welcome ${result.user.displayName}!`);
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+      toast.error("Failed to sign in with Google. Please try again.");
+    }
   };
 
   const handleResetPassword = async () => {
@@ -107,12 +121,29 @@ const Login = () => {
             Log In
           </button>
 
-          <div className="p-10">
-            <p className="text-center mb-2">OR </p>
+          <div className="w-full flex items-center gap-3 px-10 my-2">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+            <span className="text-gray-400 text-xs font-semibold tracking-wider">OR</span>
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleGoogleSignIn}
+            className="group relative flex items-center justify-center gap-2 bg-white text-gray-700 rounded-full px-6 py-2.5 border-2 border-gray-200 hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-100 transition-all duration-300 transform hover:scale-105 text-sm font-medium"
+          >
+            <FcGoogle size={20} className="transition-transform duration-300 group-hover:rotate-12" />
+            <span className="bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent group-hover:from-emerald-600 group-hover:to-emerald-700 transition-all duration-300">
+              Sign in with Google
+            </span>
+          </button>
+
+          <div className="mt-4">
+            <p className="text-center text-gray-600">Don't have an account?</p>
             <button
               type="button"
               onClick={() => navigate("/signup")}
-              className="text-emerald-600 bg-white rounded-full w-52 px-5 py-3 m-5 border border-[#043b22] font-bold"
+              className="text-emerald-600 bg-white rounded-full w-52 px-5 py-3 mt-2 border border-emerald-600 font-bold hover:bg-emerald-50 transition-colors"
             >
               Create account
             </button>
