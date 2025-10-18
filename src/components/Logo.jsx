@@ -22,7 +22,7 @@ const Logo = ({ size = 40, className = "" }) => {
           <path
             key={i}
             d="M 0 -15 L 8 -25 L 8 -15 Z"
-            fill="rgba(255, 255, 255, 0.9)"
+            fill="#fbbf24"
             transform={`rotate(${angle})`}
           />
         ))}

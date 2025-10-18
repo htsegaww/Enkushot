@@ -7,14 +7,14 @@
   
   <!-- Camera aperture blades -->
   <g transform="translate(50, 50)">
-    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(0)" />
-    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(45)" />
-    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(90)" />
-    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(135)" />
-    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(180)" />
-    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(225)" />
-    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(270)" />
-    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(315)" />
+    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="#fbbf24" transform="rotate(0)" />
+    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="#fbbf24" transform="rotate(45)" />
+    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="#fbbf24" transform="rotate(90)" />
+    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="#fbbf24" transform="rotate(135)" />
+    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="#fbbf24" transform="rotate(180)" />
+    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="#fbbf24" transform="rotate(225)" />
+    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="#fbbf24" transform="rotate(270)" />
+    <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="#fbbf24" transform="rotate(315)" />
   </g>
   
   <!-- Inner circle (lens) -->

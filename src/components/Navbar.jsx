@@ -47,7 +47,7 @@ const Navbar = () => {
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between" style={{ height: '64px' }}>
           <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <Logo size={40} />
-            <h1 className="text-2xl text-[#069668] font-semibold">Lumina</h1>
+            <h1 className="text-2xl text-[#069668] font-semibold">Enkushot</h1>
           </Link>
 
           <nav>
