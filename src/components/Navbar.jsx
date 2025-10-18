@@ -56,7 +56,7 @@ const Navbar = () => {
                 <Link to="/" className="text-gray-700 hover:text-emerald-600">Home</Link>
               </li>
               <li>
-                <Link to="/" className="text-gray-700 hover:text-emerald-600">Gallery</Link>
+                <Link to="/gallery" className="text-gray-700 hover:text-emerald-600">Gallery</Link>
               </li>
               <li>
                 <button onClick={triggerFileSelect} className="flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded">

@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
+import Gallery from "./pages/Gallery";
 import Signup from "./pages/Signup";
 import { AuthProvider } from "./context/auth";
 import PublicRoute from "./routes/PublicRoute";
@@ -27,6 +28,14 @@ const App = () => {
             element={
               <PublicRoute>
                 <Home />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/gallery"
+            element={
+              <PublicRoute>
+                <Gallery />
               </PublicRoute>
             }
           />
