@@ -5,23 +5,25 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { deleteDoc } from "firebase/firestore";
 import SignInModal from "./SignInModal";
 import { useState } from "react";
+import useLikes from "../hooks/useLikes";
 const DEBUG = typeof window !== "undefined" && new URLSearchParams(window.location.search).get("debug") === "1";
 
 const ImageGrid = ({ docs = [], images, setSelectedImage, setSelectedIndex, isFavorited, toggleFavorite, isFavoritesView }) => {
   const { user } = useAuth();
+  const { isLiked, toggleLike } = useLikes();
 
   const [showSignIn, setShowSignIn] = useState(false);
-  // local optimistic favorites to ensure immediate UI feedback
-  const [localFavs, setLocalFavs] = useState(new Set());
+  // local optimistic likes to ensure immediate UI feedback
+  const [localLikes, setLocalLikes] = useState(new Set());
 
   // Support both 'docs' (main gallery) and 'images' (favorites modal)
   const items = images || docs;
   return (
     <div className="img-grid relative">
       {items.map((doc, idx) => {
-        // For favorites modal, fallback to always favorited
-        const favoritedRemote = isFavorited ? isFavorited(doc.url) : isFavoritesView ? true : false;
-        const favorited = localFavs.has(doc.url) || favoritedRemote;
+        // Check if image is liked (heart icon now represents likes)
+        const likedRemote = isLiked(doc.url);
+        const liked = localLikes.has(doc.url) || likedRemote;
 
         return (
           <motion.div
@@ -52,7 +54,7 @@ const ImageGrid = ({ docs = [], images, setSelectedImage, setSelectedIndex, isFa
                 </button>
               )}
 
-              {/* Heart button only visible on hover */}
+              {/* Heart button (like button that creates notifications) */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -60,28 +62,20 @@ const ImageGrid = ({ docs = [], images, setSelectedImage, setSelectedIndex, isFa
                     setShowSignIn(true);
                     return;
                   }
-                  setLocalFavs((prev) => {
+                  setLocalLikes((prev) => {
                     const next = new Set(prev);
                     if (next.has(doc.url)) next.delete(doc.url);
                     else next.add(doc.url);
                     return next;
                   });
                   console.log("[ImageGrid] heart clicked for", doc.url);
-                  if (toggleFavorite) {
-                    try {
-                      toggleFavorite(doc.url);
-                    } catch (error) {
-                      console.error("[ImageGrid] toggleFavorite error:", error);
-                    }
-                  } else {
-                    console.warn("[ImageGrid] toggleFavorite is not defined!");
-                  }
+                  toggleLike(doc.url, doc.userEmail);
                 }}
-                className={`img-heart absolute bottom-2 right-2 ${favorited ? "favorited" : ""}`}
-                aria-pressed={favorited}
-                aria-label="Favorite"
+                className={`img-heart absolute bottom-2 right-2 ${liked ? "favorited" : ""}`}
+                aria-pressed={liked}
+                aria-label="Like"
               >
-                {favorited ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
+                {liked ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
               </button>
             </motion.div>
 

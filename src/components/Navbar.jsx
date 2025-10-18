@@ -1,19 +1,23 @@
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { useAuth } from "../hooks/useAuth";
+import useNotifications from "../hooks/useNotifications";
 import { useRef, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
-import { MdPersonAddAlt1, MdPersonRemoveAlt1 } from "react-icons/md";
+import { MdPersonAddAlt1 } from "react-icons/md";
+import { FaUserCircle } from "react-icons/fa";
 
 import { FaUpload, FaHeart } from "react-icons/fa";
 import ProgressBar from "./ProgressBar";
 import UploadModal from "./UploadModal";
 import FavoritesModal from "./FavoritesModal";
+import ProfileModal from "./ProfileModal";
 import Logo from "./Logo";
 
 const Navbar = () => {
   const { user } = useAuth();
+  const { unreadCount } = useNotifications();
   const navigate = useNavigate();
 
   const fileInputRef = useRef(null);
@@ -21,6 +25,7 @@ const Navbar = () => {
   const [error, setError] = useState(null);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showFavoritesModal, setShowFavoritesModal] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
   const types = ["image/jpeg", "image/png", "image/jpg", "image/avif"];
 
   const triggerFileSelect = () => {
@@ -76,9 +81,26 @@ const Navbar = () => {
               </li>
               <li>
                 {user ? (
-                  <button onClick={handleLogout} className="text-gray-700 hover:text-red-600 flex items-center gap-2">
-                    <MdPersonRemoveAlt1 />
-                    <span className="hidden sm:inline">Logout</span>
+                  <button 
+                    onClick={() => setShowProfileModal(true)} 
+                    className="relative flex items-center gap-2 hover:opacity-80 transition-opacity"
+                    aria-label="Profile"
+                  >
+                    {user.photoURL ? (
+                      <img
+                        src={user.photoURL}
+                        alt="Profile"
+                        className="w-8 h-8 rounded-full border-2 border-emerald-500 object-cover"
+                      />
+                    ) : (
+                      <FaUserCircle className="text-emerald-600 text-3xl" />
+                    )}
+                    {/* Notification badge */}
+                    {unreadCount > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                        {unreadCount > 9 ? "9+" : unreadCount}
+                      </span>
+                    )}
                   </button>
                 ) : (
                   <Link to="/login" className="flex items-center gap-2 text-gray-700 hover:text-emerald-600">
@@ -104,6 +126,7 @@ const Navbar = () => {
 
   {showUploadModal && <UploadModal onClose={() => setShowUploadModal(false)} />}
   {showFavoritesModal && <FavoritesModal onClose={() => setShowFavoritesModal(false)} />}
+  {showProfileModal && <ProfileModal onClose={() => setShowProfileModal(false)} user={user} />}
     </>
   );
 };

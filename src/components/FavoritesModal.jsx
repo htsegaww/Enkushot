@@ -1,14 +1,22 @@
 import React from "react";
 import ImageGrid from "./ImageGrid";
-import useFavorites from "../hooks/useFavorites";
+import useLikes from "../hooks/useLikes";
 import { useAuth } from "../hooks/useAuth";
 import { IoMdClose } from "react-icons/io";
 
 const FavoritesModal = ({ onClose }) => {
-  const { favorites, isFavorited, toggleFavorite } = useFavorites();
+  const { likes, isLiked, toggleLike } = useLikes();
   const { user } = useAuth();
 
-  console.log("[FavoritesModal] Rendering with", favorites.length, "favorites:", favorites);
+  console.log("[FavoritesModal] Rendering with", likes.length, "likes:", likes);
+
+  // Convert likes to image format for ImageGrid
+  const likedImages = likes.map((like) => ({
+    url: like.imageUrl,
+    id: like.id,
+    userEmail: like.imageOwnerEmail,
+    createdAt: like.createdAt,
+  }));
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -20,22 +28,18 @@ const FavoritesModal = ({ onClose }) => {
         >
           <IoMdClose size={24} />
         </button>
-        <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">Your Favorites ❤️</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">Your Liked Photos ❤️</h2>
 
         <div className="mb-3 text-sm text-gray-600 text-center">
-          {favorites.length === 0
-            ? "No favorite images yet."
-            : `Showing ${favorites.length} favorite${favorites.length > 1 ? "s" : ""}`}
+          {likes.length === 0
+            ? "No liked images yet."
+            : `Showing ${likes.length} liked image${likes.length > 1 ? "s" : ""}`}
         </div>
 
-        
-
-        {favorites.length > 0 && (
+        {likes.length > 0 && (
           <ImageGrid
-            images={favorites.map((f) => ({ url: f.url, id: f.id, ref: f.ref, userEmail: f.userEmail, createdAt: f.createdAt }))}
+            images={likedImages}
             isFavoritesView
-            isFavorited={isFavorited}
-            toggleFavorite={toggleFavorite}
           />
         )}
       </div>
