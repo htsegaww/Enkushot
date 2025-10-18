@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Gallery from "./pages/Gallery";
+import Contact from "./pages/Contact";
 import Signup from "./pages/Signup";
 import { AuthProvider } from "./context/auth";
 import PublicRoute from "./routes/PublicRoute";
@@ -25,6 +26,7 @@ const App = () => {
           />
           <Route path="/" element={<Home />} />
           <Route path="/gallery" element={<Gallery />} />
+          <Route path="/contact" element={<Contact />} />
 
           <Route
             path="/signup"
