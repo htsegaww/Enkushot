@@ -68,6 +68,36 @@ form {
   padding-right: 8px;
   box-sizing: border-box;
 }
+
+/* Responsive grid for mobile devices */
+@media screen and (max-width: 1200px) {
+  .img-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .img-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .img-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 8px;
+    padding: 16px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .img-grid {
+    grid-template-columns: 1fr;
+    grid-gap: 12px;
+    padding: 12px;
+  }
+}
 .img-wrap {
   overflow: hidden;
   height: 0;
@@ -167,6 +197,25 @@ form {
 }
 .modal-arrow.right {
   right: 48px; /* move arrows inward to create space */
+}
+
+/* Adjust modal arrows for mobile */
+@media screen and (max-width: 768px) {
+  .modal-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  .modal-arrow.left {
+    left: 12px;
+  }
+  .modal-arrow.right {
+    right: 12px;
+  }
+  .backdrop img {
+    max-width: 90%;
+    max-height: 80vh;
+  }
 }
 .modal-arrow:hover {
   transform: translateY(-50%) scale(1.04);
@@ -460,16 +509,10 @@ form {
 }
 
 @media screen and (max-width: 900px) {
-  .img-grid {
-    grid-template-columns: 1fr 1fr;
-    padding: 30px;
-  }
+  /* Already handled above with better breakpoints */
 }
 @media screen and (max-width: 600px) {
-  .img-grid {
-    grid-template-columns: 1fr;
-    padding: 40px;
-  }
+  /* Already handled above with better breakpoints */
 }
 /* @media screen and (min-width: 500px) {
   .img-grid {
