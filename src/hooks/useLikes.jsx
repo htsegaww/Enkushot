@@ -51,11 +51,14 @@ const useLikes = () => {
       return;
     }
 
+    console.log("[useLikes] toggleLike called for:", imageUrl, "owner:", imageOwnerEmail);
+
     try {
       const existingLike = likes.find((like) => like.imageUrl === imageUrl);
 
       if (existingLike) {
         // Unlike: remove the like
+        console.log("[useLikes] Unliking image");
         const likesRef = collection(db, "likes");
         const q = query(
           likesRef,
@@ -68,6 +71,7 @@ const useLikes = () => {
         });
       } else {
         // Like: add the like
+        console.log("[useLikes] Liking image");
         await addDoc(collection(db, "likes"), {
           imageUrl,
           imageOwnerEmail,
@@ -79,6 +83,7 @@ const useLikes = () => {
 
         // Create notification for the image owner (don't notify yourself)
         if (imageOwnerEmail && imageOwnerEmail !== user.email) {
+          console.log("[useLikes] Creating notification for:", imageOwnerEmail);
           await addDoc(collection(db, "notifications"), {
             type: "like",
             imageUrl,
@@ -90,6 +95,9 @@ const useLikes = () => {
             read: false,
             createdAt: serverTimestamp(),
           });
+          console.log("[useLikes] Notification created successfully");
+        } else {
+          console.log("[useLikes] Not creating notification (same user or no owner email)");
         }
       }
     } catch (error) {

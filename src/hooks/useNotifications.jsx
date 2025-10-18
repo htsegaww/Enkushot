@@ -24,33 +24,50 @@ const useNotifications = () => {
       return;
     }
 
+    console.log("[useNotifications] Subscribing for user:", user.email);
+
     // Subscribe to notifications for this user
     const notificationsRef = collection(db, "notifications");
     const q = query(
       notificationsRef,
-      where("imageOwnerEmail", "==", user.email),
-      orderBy("createdAt", "desc")
+      where("imageOwnerEmail", "==", user.email)
     );
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const userNotifications = [];
-      let unread = 0;
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        console.log("[useNotifications] Snapshot received, size:", snapshot.size);
+        const userNotifications = [];
+        let unread = 0;
 
-      snapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        userNotifications.push({
-          id: docSnap.id,
-          ...data,
-          createdAt: data.createdAt?.toDate(),
+        snapshot.forEach((docSnap) => {
+          const data = docSnap.data();
+          console.log("[useNotifications] Notification:", docSnap.id, data);
+          userNotifications.push({
+            id: docSnap.id,
+            ...data,
+            createdAt: data.createdAt?.toDate(),
+          });
+          if (!data.read) {
+            unread++;
+          }
         });
-        if (!data.read) {
-          unread++;
-        }
-      });
 
-      setNotifications(userNotifications);
-      setUnreadCount(unread);
-    });
+        // Sort by createdAt manually (newest first)
+        userNotifications.sort((a, b) => {
+          if (!a.createdAt) return 1;
+          if (!b.createdAt) return -1;
+          return b.createdAt - a.createdAt;
+        });
+
+        console.log("[useNotifications] Total notifications:", userNotifications.length, "Unread:", unread);
+        setNotifications(userNotifications);
+        setUnreadCount(unread);
+      },
+      (error) => {
+        console.error("[useNotifications] Error in snapshot:", error);
+      }
+    );
 
     return () => unsubscribe();
   }, [user]);
