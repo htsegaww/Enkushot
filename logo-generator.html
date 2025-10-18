@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina Logo Generator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        h1 {
+            color: #069668;
+            margin-bottom: 30px;
+        }
+        .logo-display {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        .logo-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo-box {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 20px;
+        }
+        button {
+            background: #069668;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #047857;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(6, 150, 104, 0.3);
+        }
+        .instructions {
+            background: #ecfdf5;
+            border-left: 4px solid #069668;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: left;
+            border-radius: 8px;
+        }
+        .instructions h3 {
+            color: #069668;
+            margin-top: 0;
+        }
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ Lumina Logo</h1>
+        
+        <div class="logo-display">
+            <div class="logo-item">
+                <div class="logo-box">
+                    <svg id="logo512" width="512" height="512" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Outer glow circle -->
+                        <circle cx="50" cy="50" r="45" fill="url(#glow)" opacity="0.3" />
+                        
+                        <!-- Main circle -->
+                        <circle cx="50" cy="50" r="38" fill="url(#gradient)" />
+                        
+                        <!-- Camera aperture blades -->
+                        <g transform="translate(50, 50)">
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(0)" />
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(45)" />
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(90)" />
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(135)" />
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(180)" />
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(225)" />
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(270)" />
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(315)" />
+                        </g>
+                        
+                        <!-- Inner circle (lens) -->
+                        <circle cx="50" cy="50" r="12" fill="url(#innerGradient)" />
+                        
+                        <!-- Light sparkle -->
+                        <circle cx="35" cy="35" r="3" fill="white" opacity="0.8" />
+                        <circle cx="30" cy="38" r="1.5" fill="white" opacity="0.6" />
+                        
+                        <!-- Gradients -->
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#069668" />
+                                <stop offset="100%" stop-color="#047857" />
+                            </linearGradient>
+                            
+                            <radialGradient id="glow">
+                                <stop offset="0%" stop-color="#069668" stop-opacity="0.6" />
+                                <stop offset="100%" stop-color="#069668" stop-opacity="0" />
+                            </radialGradient>
+                            
+                            <radialGradient id="innerGradient">
+                                <stop offset="0%" stop-color="#1f2937" />
+                                <stop offset="100%" stop-color="#111827" />
+                            </radialGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <button onclick="downloadSVG('logo512', 512, 'lumina-logo-512.svg')">Download 512x512</button>
+            </div>
+            
+            <div class="logo-item">
+                <div class="logo-box">
+                    <svg id="logo192" width="192" height="192" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="url(#glow2)" opacity="0.3" />
+                        <circle cx="50" cy="50" r="38" fill="url(#gradient2)" />
+                        <g transform="translate(50, 50)">
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(0)" />
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(45)" />
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(90)" />
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(135)" />
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(180)" />
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(225)" />
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(270)" />
+                            <path d="M 0 -15 L 8 -25 L 8 -15 Z" fill="rgba(255, 255, 255, 0.9)" transform="rotate(315)" />
+                        </g>
+                        <circle cx="50" cy="50" r="12" fill="url(#innerGradient2)" />
+                        <circle cx="35" cy="35" r="3" fill="white" opacity="0.8" />
+                        <circle cx="30" cy="38" r="1.5" fill="white" opacity="0.6" />
+                        <defs>
+                            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#069668" />
+                                <stop offset="100%" stop-color="#047857" />
+                            </linearGradient>
+                            <radialGradient id="glow2">
+                                <stop offset="0%" stop-color="#069668" stop-opacity="0.6" />
+                                <stop offset="100%" stop-color="#069668" stop-opacity="0" />
+                            </radialGradient>
+                            <radialGradient id="innerGradient2">
+                                <stop offset="0%" stop-color="#1f2937" />
+                                <stop offset="100%" stop-color="#111827" />
+                            </radialGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <button onclick="downloadSVG('logo192', 192, 'lumina-logo-192.svg')">Download 192x192</button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>📝 How to use your logo:</h3>
+            <ol>
+                <li><strong>Download</strong> both SVG files using the buttons above</li>
+                <li><strong>Convert to PNG/ICO</strong> using online tools like:
+                    <ul>
+                        <li><a href="https://cloudconvert.com/svg-to-png" target="_blank">CloudConvert</a> (SVG → PNG)</li>
+                        <li><a href="https://favicon.io/favicon-converter/" target="_blank">Favicon.io</a> (PNG → ICO/Favicon)</li>
+                    </ul>
+                </li>
+                <li><strong>Replace</strong> the files in <code>/public/</code>:
+                    <ul>
+                        <li><code>favicon.ico</code> - Browser tab icon (16x16, 32x32, 48x48)</li>
+                        <li><code>icon.png</code> - App icon (192x192 or 512x512)</li>
+                    </ul>
+                </li>
+            </ol>
+            <p><strong>💡 Tip:</strong> The logo represents a camera aperture with light (lumina = light), perfect for your photo gallery app!</p>
+        </div>
+    </div>
+
+    <script>
+        function downloadSVG(elementId, size, filename) {
+            const svg = document.getElementById(elementId);
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const blob = new Blob([svgData], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

@@ -10,6 +10,7 @@ import { FaUpload, FaHeart } from "react-icons/fa";
 import ProgressBar from "./ProgressBar";
 import UploadModal from "./UploadModal";
 import FavoritesModal from "./FavoritesModal";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const { user } = useAuth();
@@ -44,8 +45,9 @@ const Navbar = () => {
     <>
       <header className="w-full bg-white shadow-sm fixed top-0 left-0 right-0 z-50" style={{ height: '64px' }}>
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between" style={{ height: '64px' }}>
-          <Link to="/" className="flex items-center gap-2">
-            <h1 className="text-2xl text-[#069668] font-semibold">Heno<span className="text-gray-800">Gram</span></h1>
+          <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <Logo size={40} />
+            <h1 className="text-2xl text-[#069668] font-semibold">Lumina</h1>
           </Link>
 
           <nav>
