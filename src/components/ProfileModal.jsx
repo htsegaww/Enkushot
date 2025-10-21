@@ -73,7 +73,9 @@ const ProfileModal = ({ onClose, user }) => {
               />
             ) : (
               <div className="w-24 h-24 rounded-full border-4 border-white shadow-lg bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center">
-                <FaUserCircle className="text-white text-6xl" />
+                <span className="text-white text-4xl font-bold">
+                  {user?.displayName ? user.displayName.charAt(0).toUpperCase() : user?.email ? user.email.charAt(0).toUpperCase() : 'U'}
+                </span>
               </div>
             )}
           </div>

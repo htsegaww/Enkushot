@@ -19,12 +19,9 @@ const useFavorites = () => {
 
   useEffect(() => {
     if (!user) {
-      console.log("[useFavorites] No user, clearing favorites");
       setFavorites([]);
       return;
     }
-
-    console.log("[useFavorites] Subscribing to favorites for user:", user.email);
 
     const colRef = collection(db, "favorites");
     const q = query(colRef, where("userEmail", "==", user.email));
@@ -33,9 +30,7 @@ const useFavorites = () => {
       snapshot.forEach((doc) => {
         favs.push({ ...doc.data(), id: doc.id, ref: doc.ref });
       });
-      console.log("[useFavorites] Snapshot received. Count:", snapshot.size, "Favorites:", favs);
       const favUrls = favs.map((f) => f.url);
-      console.log("[useFavorites] URLs ->", favUrls);
       setFavorites(favs);
 
       // clear pending adds that the server now confirms
@@ -55,13 +50,10 @@ const useFavorites = () => {
   }, [user]);
 
   const toggleFavorite = async (url) => {
-    console.log("[useFavorites] toggleFavorite called with URL:", url);
     if (!user) {
-      console.error("[useFavorites] No user - throwing error");
       throw new Error("Not authenticated");
     }
     const existing = favorites.find((f) => f.url === url);
-    console.log("[useFavorites] toggleFavorite", url, existing ? "remove" : "add");
     if (existing) {
       // optimistic remove
       setPendingRemoves((prev) => new Set([...prev, url]));
@@ -69,7 +61,7 @@ const useFavorites = () => {
       try {
         if (existing.ref) await deleteDoc(existing.ref);
       } catch (e) {
-        console.error(e);
+        console.error("Error removing favorite:", e);
         // revert on error
         setPendingRemoves((prev) => {
           const next = new Set(prev);
@@ -82,20 +74,15 @@ const useFavorites = () => {
       // optimistic add (will be replaced by onSnapshot result)
       const optimistic = { url, userEmail: user.email, id: `optimistic-${Date.now()}`, ref: null };
       setPendingAdds((prev) => new Set(prev).add(url));
-      setFavorites((prev) => {
-        const next = [...prev, optimistic];
-        console.log("[useFavorites] optimistic add ->", next.map((f) => f.url));
-        return next;
-      });
+      setFavorites((prev) => [...prev, optimistic]);
       try {
-        const docRef = await addDoc(collection(db, "favorites"), {
+        await addDoc(collection(db, "favorites"), {
           url,
           userEmail: user.email,
           createdAt: serverTimestamp(),
         });
-        console.log("[useFavorites] addDoc success! ID:", docRef.id);
       } catch (e) {
-        console.error("[useFavorites] addDoc failed:", e);
+        console.error("Error adding favorite:", e);
         // remove optimistic entry on error
         setFavorites((prev) => prev.filter((f) => f.id !== optimistic.id));
         setPendingAdds((prev) => {

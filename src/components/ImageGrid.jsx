@@ -6,9 +6,8 @@ import { deleteDoc } from "firebase/firestore";
 import SignInModal from "./SignInModal";
 import { useState } from "react";
 import useLikes from "../hooks/useLikes";
-const DEBUG = typeof window !== "undefined" && new URLSearchParams(window.location.search).get("debug") === "1";
 
-const ImageGrid = ({ docs = [], images, setSelectedImage, setSelectedIndex, isFavorited, toggleFavorite, isFavoritesView }) => {
+const ImageGrid = ({ docs = [], images, setSelectedImage, setSelectedIndex }) => {
   const { user } = useAuth();
   const { isLiked, toggleLike } = useLikes();
 
@@ -68,7 +67,6 @@ const ImageGrid = ({ docs = [], images, setSelectedImage, setSelectedIndex, isFa
                     else next.add(doc.url);
                     return next;
                   });
-                  console.log("[ImageGrid] heart clicked for", doc.url);
                   toggleLike(doc.url, doc.userEmail);
                 }}
                 className={`img-heart absolute bottom-2 right-2 ${liked ? "favorited" : ""}`}
@@ -78,12 +76,6 @@ const ImageGrid = ({ docs = [], images, setSelectedImage, setSelectedIndex, isFa
                 {liked ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
               </button>
             </motion.div>
-
-            {DEBUG && (
-              <div className="debug-fav" aria-hidden>
-                fav: {String(favorited)}
-              </div>
-            )}
           </motion.div>
         );
       })}

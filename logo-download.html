@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enkushot Logo - PNG Download</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        h1 {
+            color: #069668;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        
+        p {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+        
+        #logoCanvas {
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            margin: 20px 0;
+            background: white;
+        }
+        
+        .size-selector {
+            margin: 20px 0;
+        }
+        
+        .size-selector label {
+            display: block;
+            margin-bottom: 10px;
+            color: #374151;
+            font-weight: 600;
+        }
+        
+        .size-selector select {
+            padding: 10px 20px;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+            min-width: 200px;
+        }
+        
+        .size-selector select:focus {
+            outline: none;
+            border-color: #069668;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #069668 0%, #047857 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(6, 150, 104, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(6, 150, 104, 0.4);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0fdf4;
+            border-radius: 8px;
+            border-left: 4px solid #069668;
+        }
+        
+        .info p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #047857;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Enkushot Logo</h1>
+        <p>Your beautiful camera aperture logo ready to download!</p>
+        
+        <canvas id="logoCanvas"></canvas>
+        
+        <div class="size-selector">
+            <label for="sizeSelect">Select Logo Size:</label>
+            <select id="sizeSelect" onchange="updateLogo()">
+                <option value="256">256x256 (Small - Favicon)</option>
+                <option value="512" selected>512x512 (Medium - Web)</option>
+                <option value="1024">1024x1024 (Large - Print)</option>
+                <option value="2048">2048x2048 (XL - High Res)</option>
+                <option value="4096">4096x4096 (XXL - Maximum)</option>
+            </select>
+        </div>
+        
+        <button class="download-btn" onclick="downloadLogo()">
+            📥 Download PNG
+        </button>
+        
+        <div class="info">
+            <p><strong>✨ Transparent Background</strong></p>
+            <p>Perfect for use on any colored background</p>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('logoCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        function drawLogo(size) {
+            // Set canvas size
+            canvas.width = size;
+            canvas.height = size;
+            
+            // Display size (max 400px for preview)
+            const displaySize = Math.min(size, 400);
+            canvas.style.width = displaySize + 'px';
+            canvas.style.height = displaySize + 'px';
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            const center = size / 2;
+            const scale = size / 100; // Original viewBox is 100x100
+            
+            // Outer glow circle
+            const glowGradient = ctx.createRadialGradient(center, center, 0, center, center, 45 * scale);
+            glowGradient.addColorStop(0, 'rgba(6, 150, 104, 0.18)');
+            glowGradient.addColorStop(1, 'rgba(6, 150, 104, 0)');
+            
+            ctx.fillStyle = glowGradient;
+            ctx.beginPath();
+            ctx.arc(center, center, 45 * scale, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Main circle with gradient
+            const mainGradient = ctx.createLinearGradient(0, 0, size, size);
+            mainGradient.addColorStop(0, '#069668');
+            mainGradient.addColorStop(1, '#047857');
+            
+            ctx.fillStyle = mainGradient;
+            ctx.beginPath();
+            ctx.arc(center, center, 38 * scale, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Camera aperture blades (yellow triangles)
+            ctx.fillStyle = '#fbbf24';
+            const angles = [0, 45, 90, 135, 180, 225, 270, 315];
+            
+            angles.forEach(angle => {
+                ctx.save();
+                ctx.translate(center, center);
+                ctx.rotate((angle * Math.PI) / 180);
+                
+                ctx.beginPath();
+                ctx.moveTo(0, -15 * scale);
+                ctx.lineTo(8 * scale, -25 * scale);
+                ctx.lineTo(8 * scale, -15 * scale);
+                ctx.closePath();
+                ctx.fill();
+                
+                ctx.restore();
+            });
+            
+            // Inner circle (lens) with gradient
+            const innerGradient = ctx.createRadialGradient(center, center, 0, center, center, 12 * scale);
+            innerGradient.addColorStop(0, '#1f2937');
+            innerGradient.addColorStop(1, '#111827');
+            
+            ctx.fillStyle = innerGradient;
+            ctx.beginPath();
+            ctx.arc(center, center, 12 * scale, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Light sparkles
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.beginPath();
+            ctx.arc(35 * scale, 35 * scale, 3 * scale, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.beginPath();
+            ctx.arc(30 * scale, 38 * scale, 1.5 * scale, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        
+        function updateLogo() {
+            const size = parseInt(document.getElementById('sizeSelect').value);
+            drawLogo(size);
+        }
+        
+        function downloadLogo() {
+            const size = parseInt(document.getElementById('sizeSelect').value);
+            const link = document.createElement('a');
+            link.download = `enkushot-logo-${size}x${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+        
+        // Draw initial logo
+        updateLogo();
+    </script>
+</body>
+</html>

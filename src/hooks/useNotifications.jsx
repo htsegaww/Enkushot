@@ -5,7 +5,6 @@ import {
   query,
   where,
   onSnapshot,
-  orderBy,
   updateDoc,
   doc,
   deleteDoc,
@@ -24,8 +23,6 @@ const useNotifications = () => {
       return;
     }
 
-    console.log("[useNotifications] Subscribing for user:", user.email);
-
     // Subscribe to notifications for this user
     const notificationsRef = collection(db, "notifications");
     const q = query(
@@ -36,13 +33,11 @@ const useNotifications = () => {
     const unsubscribe = onSnapshot(
       q,
       (snapshot) => {
-        console.log("[useNotifications] Snapshot received, size:", snapshot.size);
         const userNotifications = [];
         let unread = 0;
 
         snapshot.forEach((docSnap) => {
           const data = docSnap.data();
-          console.log("[useNotifications] Notification:", docSnap.id, data);
           userNotifications.push({
             id: docSnap.id,
             ...data,
@@ -60,12 +55,11 @@ const useNotifications = () => {
           return b.createdAt - a.createdAt;
         });
 
-        console.log("[useNotifications] Total notifications:", userNotifications.length, "Unread:", unread);
         setNotifications(userNotifications);
         setUnreadCount(unread);
       },
       (error) => {
-        console.error("[useNotifications] Error in snapshot:", error);
+        console.error("Error loading notifications:", error);
       }
     );
 

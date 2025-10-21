@@ -38,8 +38,6 @@ const Gallery = () => {
         docs={displayedDocs}
         setSelectedImage={setSelectedImage}
         setSelectedIndex={setSelectedIndex}
-        isFavorited={isFavorited}
-        toggleFavorite={toggleFavorite}
       />
       {selectedImage && (
         <Modal

@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 
 import "./App.css";
 import User from "./pages/User";
+import Admin from "./pages/Admin";
 
 const App = () => {
   return (
@@ -21,6 +22,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <User />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <PrivateRoute>
+                <Admin />
               </PrivateRoute>
             }
           />

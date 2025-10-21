@@ -88,7 +88,7 @@ const Contact = () => {
 
             {/* Instagram */}
             <motion.a
-              href="https://instagram.com"
+              href="https://instagram.com/enkushot"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
@@ -100,7 +100,7 @@ const Contact = () => {
               </div>
               <div className="flex-1">
                 <h3 className="text-xl font-bold text-gray-900 mb-1">Instagram</h3>
-                <p className="text-gray-600">Follow us for daily inspiration</p>
+                <p className="text-gray-600">@enkushot - Follow us for daily inspiration</p>
               </div>
               <svg
                 className="w-6 h-6 text-gray-400 group-hover:text-emerald-600 group-hover:translate-x-2 transition-all"
