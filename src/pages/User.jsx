@@ -13,7 +13,6 @@ const User = () => {
   const { user } = useAuth();
   const { docs } = useFirestore("images");
   
-  // Filter to show only the current user's photos
   const myPhotos = user ? docs.filter(doc => doc.userEmail === user.email) : [];
 
   return (
@@ -21,7 +20,6 @@ const User = () => {
       <Navbar />
       <Title />
       <UploadForm />
-      {/* Display count of user's photos */}
       {user && (
         <div className="text-center mt-4 mb-2">
           <p className="text-gray-700 font-medium">

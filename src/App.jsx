@@ -1,16 +1,15 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import Gallery from "./pages/Gallery";
-import Contact from "./pages/Contact";
-import Signup from "./pages/Signup";
 import { AuthProvider } from "./context/auth";
 import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
+import Home from "./pages/Home";
+import Gallery from "./pages/Gallery";
+import Contact from "./pages/Contact";
 import Login from "./pages/Login";
-
-import "./App.css";
+import Signup from "./pages/Signup";
 import User from "./pages/User";
 import Admin from "./pages/Admin";
+import "./App.css";
 
 const App = () => {
   return (

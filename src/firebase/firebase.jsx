@@ -1,7 +1,5 @@
 import { initializeApp } from "firebase/app";
-//storage
 import { getStorage } from "firebase/storage";
-//database
 import { getFirestore, serverTimestamp } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
@@ -17,11 +15,9 @@ const firebaseConfig = {
 if (!import.meta.env.VITE_PROJECT_ID) {
   console.error("⚠️ VITE_PROJECT_ID is missing! Check your .env file");
 }
-// Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-
-//initialize storage and database
 const projectStorage = getStorage(app);
 const db = getFirestore(app);
 const timestamp = serverTimestamp();

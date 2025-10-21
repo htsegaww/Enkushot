@@ -1,21 +1,18 @@
-import { motion } from "framer-motion";
-import "../App.css";
-import { useAuth } from "../hooks/useAuth";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { deleteDoc } from "firebase/firestore";
-import SignInModal from "./SignInModal";
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { deleteDoc } from "firebase/firestore";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useAuth } from "../hooks/useAuth";
 import useLikes from "../hooks/useLikes";
+import SignInModal from "./SignInModal";
+import "../App.css";
 
 const ImageGrid = ({ docs = [], images, setSelectedImage, setSelectedIndex }) => {
   const { user } = useAuth();
   const { isLiked, toggleLike } = useLikes();
-
   const [showSignIn, setShowSignIn] = useState(false);
-  // local optimistic likes to ensure immediate UI feedback
   const [localLikes, setLocalLikes] = useState(new Set());
 
-  // Support both 'docs' (main gallery) and 'images' (favorites modal)
   const items = images || docs;
   return (
     <div className="img-grid relative">

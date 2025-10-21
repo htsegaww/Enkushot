@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "../firebase/firebase";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { MdEmail, MdLock } from "react-icons/md";
-import { FcGoogle } from "react-icons/fc";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
+import { MdEmail, MdLock } from "react-icons/md";
+import { FcGoogle } from "react-icons/fc";
+import { auth } from "../firebase/firebase";
 import Logo from "../components/Logo";
 
 const Login = () => {

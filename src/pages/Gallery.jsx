@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Title from "../components/Title";
 import UploadForm from "../components/UploadForm";
 import ImageGrid from "../components/ImageGrid";
 import Navbar from "../components/Navbar";
 import Modal from "../components/Modal";
-import "../App.css";
 import useFirestore from "../hooks/useFirestore";
 import useFavorites from "../hooks/useFavorites";
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const { docs } = useFirestore("images");
-  const { favorites, isFavorited, toggleFavorite } = useFavorites();
   const [showFavorites, setShowFavorites] = useState(false);
+  
+  const { docs } = useFirestore("images");
+  const { favorites } = useFavorites();
   
   const displayedDocs = showFavorites
     ? favorites.map((f) => ({ url: f.url, id: f.id || f.url }))

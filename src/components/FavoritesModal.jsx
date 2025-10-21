@@ -1,16 +1,12 @@
-import React from "react";
+import { IoMdClose } from "react-icons/io";
 import ImageGrid from "./ImageGrid";
 import useLikes from "../hooks/useLikes";
 import { useAuth } from "../hooks/useAuth";
-import { IoMdClose } from "react-icons/io";
 
 const FavoritesModal = ({ onClose }) => {
-  const { likes, isLiked, toggleLike } = useLikes();
+  const { likes } = useLikes();
   const { user } = useAuth();
 
-  console.log("[FavoritesModal] Rendering with", likes.length, "likes:", likes);
-
-  // Convert likes to image format for ImageGrid
   const likedImages = likes.map((like) => ({
     url: like.imageUrl,
     id: like.id,

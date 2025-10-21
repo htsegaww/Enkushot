@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Modal from "../components/Modal";
 import Logo from "../components/Logo";
-import "../App.css";
 import useFirestore from "../hooks/useFirestore";
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 import { useAuth } from "../hooks/useAuth";
+import "../App.css";
 
 const Home = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -15,7 +15,6 @@ const Home = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Get first 6 images for preview
   const sampleImages = docs.slice(0, 6);
 
   return (
