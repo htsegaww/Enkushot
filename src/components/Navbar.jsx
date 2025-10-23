@@ -83,6 +83,11 @@ const Navbar = () => {
                   Contact
                 </Link>
               </li>
+              <li>
+                <Link to="/converter" className="px-4 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all duration-200 font-medium">
+                  Converter
+                </Link>
+              </li>
               {user && user.email === "henokabay10010@gmail.com" && (
                 <li>
                   <Link to="/admin" className="px-4 py-2 text-emerald-700 hover:text-emerald-800 bg-emerald-50 hover:bg-emerald-100 rounded-xl transition-all duration-200 font-bold border border-emerald-200">
@@ -274,6 +279,20 @@ const Navbar = () => {
                         className="flex items-center gap-4 text-gray-700 hover:text-emerald-600 hover:bg-white/60 backdrop-blur-sm px-5 py-3.5 rounded-2xl transition-all duration-200 text-lg font-semibold shadow-sm hover:shadow-md"
                       >
                         📧 <span>Contact</span>
+                      </Link>
+                    </motion.li>
+
+                    <motion.li
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.27 }}
+                    >
+                      <Link
+                        to="/converter"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-4 text-gray-700 hover:text-emerald-600 hover:bg-white/60 backdrop-blur-sm px-5 py-3.5 rounded-2xl transition-all duration-200 text-lg font-semibold shadow-sm hover:shadow-md"
+                      >
+                        🔄 <span>Converter</span>
                       </Link>
                     </motion.li>
 

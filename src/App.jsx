@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import User from "./pages/User";
 import Admin from "./pages/Admin";
+import ImageConverter from "./pages/ImageConverter";
 import "./App.css";
 
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/converter" element={<ImageConverter />} />
 
           <Route
             path="/signup"

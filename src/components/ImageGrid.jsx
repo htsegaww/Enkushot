@@ -14,6 +14,7 @@ const ImageGrid = ({ docs = [], images, setSelectedImage, setSelectedIndex }) =>
   const [localLikes, setLocalLikes] = useState(new Set());
 
   const items = images || docs;
+
   return (
     <div className="img-grid relative">
       {items.map((doc, idx) => {
