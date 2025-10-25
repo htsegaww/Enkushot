@@ -13,35 +13,32 @@ const useStorage = (file, metadata = {}) => {
 
   useEffect(() => {
     if (!file) return;
-    //const storageRef = ref(projectStorage, file.name);
+
     const storageRef = ref(projectStorage, file.name);
-
     const collectionRef = doc(collection(db, "images"));
-
     const uploadTask = uploadBytesResumable(storageRef, file);
+
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        const percentage =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setProgress(percentage);
       },
       (error) => {
         setError(error);
       },
       async () => {
-            await getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-              setDoc(collectionRef, {
-                url,
-                createdAt: new Date(),
-                userEmail: user?.email,
-                firstName: metadata.firstName || (user?.displayName ? user.displayName.split(" ")[0] : ""),
-              });
-              setUrl(url);
-            });
+        const url = await getDownloadURL(uploadTask.snapshot.ref);
+        await setDoc(collectionRef, {
+          url,
+          createdAt: new Date(),
+          userEmail: user?.email,
+          firstName: metadata.firstName || (user?.displayName ? user.displayName.split(" ")[0] : ""),
+        });
+        setUrl(url);
       }
     );
-  }, [file]);
+  }, [file, user, metadata]);
 
   return { progress, url, error };
 };
