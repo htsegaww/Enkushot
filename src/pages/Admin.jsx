@@ -133,22 +133,39 @@ const Admin = () => {
   };
 
   const handleDeleteUserImages = async (userEmail) => {
+    const userImages = images.filter((img) => img.userEmail === userEmail);
+    
     if (
       !window.confirm(
-        `Are you sure you want to delete all images from ${userEmail}? This action cannot be undone.`
+        `Are you sure you want to delete all ${userImages.length} images from ${userEmail}? This action cannot be undone.`
       )
     ) {
       return;
     }
 
     try {
-      const userImages = images.filter((img) => img.userEmail === userEmail);
-
+      // Delete all images without individual confirmations
       for (const image of userImages) {
-        await handleDeleteImage(image.id, image.url);
+        // Delete the image document
+        await deleteDoc(doc(db, "images", image.id));
+
+        // Delete associated likes
+        const likesQuery = query(collection(db, "likes"), where("imageUrl", "==", image.url));
+        const likesSnapshot = await getDocs(likesQuery);
+        const deletePromises = likesSnapshot.docs.map((doc) => deleteDoc(doc.ref));
+        await Promise.all(deletePromises);
+
+        // Delete associated notifications
+        const notificationsQuery = query(
+          collection(db, "notifications"),
+          where("imageUrl", "==", image.url)
+        );
+        const notificationsSnapshot = await getDocs(notificationsQuery);
+        const notifDeletePromises = notificationsSnapshot.docs.map((doc) => deleteDoc(doc.ref));
+        await Promise.all(notifDeletePromises);
       }
 
-      toast.success(`All images from ${userEmail} deleted successfully!`);
+      toast.success(`All ${userImages.length} images from ${userEmail} deleted successfully!`);
       fetchDashboardData();
     } catch (error) {
       console.error("Error deleting user images:", error);
