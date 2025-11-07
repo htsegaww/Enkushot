@@ -7,6 +7,7 @@ const UploadModal = ({ onClose }) => {
   const [uploading, setUploading] = useState(false);
   const fileRef = useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const isSettingFileRef = useRef(false);
 
   const { progress, url, error } = useStorage(uploading ? file : null, { firstName });
 
@@ -30,6 +31,12 @@ const UploadModal = ({ onClose }) => {
   }, [error]);
 
   const handleChange = (e) => {
+    // Prevent handling if we're programmatically setting the file
+    if (isSettingFileRef.current) {
+      isSettingFileRef.current = false;
+      return;
+    }
+    
     const f = e.target.files && e.target.files[0];
     if (!f) return;
     if (!f.type.startsWith("image/")) {
@@ -51,12 +58,7 @@ const UploadModal = ({ onClose }) => {
     setUploading(true);
   };
 
-  const [nativeError, setNativeError] = useState(null);
-  const [nativeFileInfo, setNativeFileInfo] = useState(null);
-
-  const openNativePicker = async () => {
-    setNativeError(null);
-    setNativeFileInfo(null);
+  const handleFilePicker = async () => {
     if (window.showOpenFilePicker) {
       try {
         const [handle] = await window.showOpenFilePicker({
@@ -69,18 +71,23 @@ const UploadModal = ({ onClose }) => {
           ]
         });
         const f = await handle.getFile();
-        setNativeFileInfo({ name: f.name, size: f.size, type: f.type });
+        isSettingFileRef.current = true;
         setFile(f);
         if (previewUrl) {
           URL.revokeObjectURL(previewUrl);
         }
         setPreviewUrl(URL.createObjectURL(f));
       } catch (err) {
-        console.error('showOpenFilePicker error', err);
-        setNativeError(String(err));
+        if (err.name !== 'AbortError') {
+          console.error('File picker error:', err);
+        }
+        isSettingFileRef.current = false;
       }
     } else {
-      setNativeError('showOpenFilePicker is not available in this browser');
+      // Fallback to traditional file input for mobile browsers
+      if (fileRef.current) {
+        fileRef.current.click();
+      }
     }
   };
 
@@ -93,23 +100,7 @@ const UploadModal = ({ onClose }) => {
             <p className="text-sm text-gray-600 mb-4">Add a photo and your first name so we can credit you.</p>
 
             <div
-              onClick={async () => {
-                // clicking the drop area triggers the same picker behavior
-                if (window.showOpenFilePicker) {
-                  try {
-                    const [handle] = await window.showOpenFilePicker({ multiple: false, types: [{ description: 'Images', accept: { 'image/*': ['.png', '.jpg', '.jpeg', '.avif'] } }] });
-                    const f = await handle.getFile();
-                    setFile(f);
-                    if (previewUrl) URL.revokeObjectURL(previewUrl);
-                    setPreviewUrl(URL.createObjectURL(f));
-                  } catch (err) {
-                    console.error('showOpenFilePicker error', err);
-                    setNativeError(String(err));
-                  }
-                } else {
-                  if (fileRef.current) fileRef.current.click();
-                }
-              }}
+              onClick={handleFilePicker}
               style={{
                 border: '2px dashed #d1fae5',
                 background: '#f0fdf4',
