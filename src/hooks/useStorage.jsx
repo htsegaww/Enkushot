@@ -3,7 +3,6 @@ import { db, projectStorage } from "../firebase/firebase";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { useAuth } from "./useAuth";
-import { analyzeImage } from "../services/aiService";
 
 const useStorage = (file, metadata = {}) => {
   const [progress, setProgress] = useState(0);
@@ -48,27 +47,12 @@ const useStorage = (file, metadata = {}) => {
           console.log('✅ Upload complete, getting download URL...');
           const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
           
-          let aiData = {
-            category: 'other',
-            tags: [],
-            confidence: 0
-          };
-          
-          try {
-            aiData = await analyzeImage(downloadUrl);
-          } catch (err) {
-            console.error('AI analysis failed:', err);
-          }
-          
           console.log('💾 Saving to Firestore...');
           await setDoc(collectionRef, {
             url: downloadUrl,
             createdAt: new Date(),
             userEmail: user?.email,
             firstName: metadata.firstName || (user?.displayName ? user.displayName.split(" ")[0] : ""),
-            category: aiData.category,
-            tags: aiData.tags,
-            aiConfidence: aiData.confidence,
           });
           
           console.log('✨ Upload complete!');
